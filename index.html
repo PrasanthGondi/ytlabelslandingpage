@@ -9,13 +9,41 @@
       rel="stylesheet"
     />
     <style>
+      :root {
+        --bg-color: #f4f4f4;
+        --text-color: #333;
+        --header-bg: #fff;
+        --feature-bg: #fff;
+        --hero-bg: #e74c3c;
+        --hero-text: white;
+        --button-bg: #e74c3c;
+        --button-text: white;
+        --button-hover: #c0392b;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-color: #1a1a1a;
+          --text-color: #f4f4f4;
+          --header-bg: #2a2a2a;
+          --feature-bg: #2a2a2a;
+          --hero-bg: #c0392b;
+          --hero-text: #f4f4f4;
+          --button-bg: #e74c3c;
+          --button-text: #f4f4f4;
+          --button-hover: #c0392b;
+          --shadow-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+
       body {
         font-family: "Montserrat", Arial, sans-serif;
         line-height: 1.6;
         margin: 0;
         padding: 0;
-        color: #333;
-        background-color: #f4f4f4;
+        color: var(--text-color);
+        background-color: var(--bg-color);
       }
       .container {
         max-width: 1200px;
@@ -23,8 +51,8 @@
         padding: 20px;
       }
       header {
-        background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: var(--header-bg);
+        box-shadow: 0 2px 5px var(--shadow-color);
         padding: 20px 0;
       }
       .logo-heading {
@@ -33,12 +61,13 @@
         justify-content: center;
       }
       h1,
-      h2 {
-        color: #333;
+      h2,
+      h3 {
+        color: var(--text-color);
       }
       .hero {
-        background-color: #e74c3c;
-        color: white;
+        background-color: var(--hero-bg);
+        color: var(--hero-text);
         text-align: center;
         padding: 50px 0;
       }
@@ -51,10 +80,10 @@
       .feature {
         flex-basis: calc(33.333% - 20px);
         margin-bottom: 40px;
-        background-color: #fff;
+        background-color: var(--feature-bg);
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px var(--shadow-color);
       }
       .feature img {
         width: 100%;
@@ -69,8 +98,8 @@
       }
       .button {
         display: inline-block;
-        background-color: #e74c3c;
-        color: white;
+        background-color: var(--button-bg);
+        color: var(--button-text);
         padding: 12px 24px;
         text-decoration: none;
         border-radius: 5px;
@@ -78,7 +107,7 @@
         transition: background-color 0.3s ease;
       }
       .button:hover {
-        background-color: #c0392b;
+        background-color: var(--button-hover);
       }
       .modal {
         display: none;
@@ -266,6 +295,7 @@
       <span class="close">&times;</span>
       <img class="modal-content" id="modalImage" />
     </div>
+
     <script>
       var modal = document.getElementById("imageModal");
       var modalImg = document.getElementById("modalImage");
@@ -306,6 +336,23 @@
       };
 
       window.addEventListener("resize", resizeModalImage);
+
+      // Theme switcher
+      function setTheme() {
+        const isDarkMode = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        document.documentElement.setAttribute(
+          "data-theme",
+          isDarkMode ? "dark" : "light"
+        );
+      }
+
+      // Set initial theme
+      setTheme();
+
+      // Listen for changes in color scheme preference
+      window.matchMedia("(prefers-color-scheme: dark)").addListener(setTheme);
     </script>
   </body>
 </html>
